@@ -1,0 +1,8 @@
+.env
+venv
+/db
+data
+__pycache__
+dumps
+.vscode
+.design
