@@ -36,3 +36,25 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
+
+  nodejs-server:
+    build:
+      context: ./src/front/api
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3080:3080"
+    container_name: node-api
+    volumes:
+       - ./src/front/:/usr/src/app/api
+       - /usr/src/app/api/node_modules
+       
+  vue-ui:
+    build:
+      context: ./src/front/my-app
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8080:8080"
+    container_name: vue-ui
+    volumes:
+       - ./src/front/my-app:/usr/src/app/my-app
+       - /usr/src/app/my-app/node_modules

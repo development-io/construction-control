@@ -7,6 +7,9 @@ import os
 router = APIRouter()
 
 token = os.getenv('BOT_TOKEN_API', default=None)
+# chat_id = 371519970 Suleiman
+chat_id = 292540322
+# chat_id = "-729129567"
 
 @router.get("/act")
 async def echo_bot():
@@ -14,10 +17,9 @@ async def echo_bot():
     if response.get('result') is not None:
         send_msg = """
 Новое уведомление:
-ЖК "Мечта"
+ЖК "Донской"
 Отделочные работы - 2 этап
-Акт приемки подписан заказчиком"""
-        chat_id = 371519970
+Задача "Покраска стен" - выполнено"""
         msg = requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={send_msg}").json()
         return msg
 
