@@ -18,12 +18,11 @@ app = FastAPI(
 app.include_router(parser_yaw.router, prefix="/api/pogoda", tags=["Погода"])
 app.include_router(task_manager.router, prefix="/api/task/list", tags=["Менеджер тасков"])
 app.include_router(filters.router, prefix="/api/filters", tags=["Фильтрация"])
-# app.include_router(bot_tg_notification.router, prefix="/api/tg/notification", tags=["Нотификация в телеграм бот"])
+app.include_router(bot_tg_notification.router, prefix="/api/tg", tags=["Нотификация в телеграм бот"])
 
 @app.on_event("startup")
 async def startup():
     await database.connect()
-
 
 @app.on_event("shutdown")
 async def shutdown():

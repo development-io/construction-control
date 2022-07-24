@@ -1,24 +1,55 @@
-from aiogram import Bot, Dispatcher, executor, types
-# from models.сonstruction_objects import Object
 from fastapi import APIRouter
 
 import logging
 import requests
 import os
 
-logging.basicConfig(level=logging.INFO)
-
 router = APIRouter()
 
-bot = Bot(token=os.getenv('BOT_TOKEN_API', default=None))
-dp = Dispatcher(bot)
+token = os.getenv('BOT_TOKEN_API', default=None)
 
-# @router.get("/", response_model=List[Object])
-@dp.message_handler()
-async def echo_message(msg: types.Message):
-    tmpl = 'Test'
-    await bot.send_message(msg.from_user.id, tmpl)
+@router.get("/act")
+async def echo_bot():
+    response = requests.get(f"https://api.telegram.org/bot{token}/getMe").json()
+    if response.get('result') is not None:
+        send_msg = """
+Новое уведомление:
+ЖК "Мечта"
+Отделочные работы - 2 этап
+Акт приемки подписан заказчиком"""
+        chat_id = 371519970
+        msg = requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={send_msg}").json()
+        return msg
 
+@router.get("/new_task")
+async def echo_bot():
+    response = requests.get(f"https://api.telegram.org/bot{token}/getMe").json()
+    if response.get('result') is not None:
+        send_msg = """
+Новая задача
+ЖК "Мечта"
+Этаж 2 Подъезд 2
+Установка унитазов
+Начало 31.12.2022
+Готовность 01.01.2023"""
+        chat_id = 371519970
+        msg = requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={send_msg}").json()
+        return msg
+    
+@router.get("/new_incident")
+async def echo_bot():
+    response = requests.get(f"https://api.telegram.org/bot{token}/getMe").json()
+    if response.get('result') is not None:
+        send_msg = """
+Новая задача
+ЖК "Мечта"
+Этаж 2 Подъезд 2
+Установка унитазов
+Начало 31.12.2022
+Готовность 01.01.2023"""
+        chat_id = 371519970
+        msg = requests.get(f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={send_msg}").json()
+        return msg
 
 # @dp.message_handler(commands=['master'])
 # async def send_welcome(message: types.Message):
@@ -48,6 +79,4 @@ async def echo_message(msg: types.Message):
 # @dp.message_handler()
 # async def send_welcome(message: types.Message):
 #     await message.answer("Неверная команда.")
-
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    
