@@ -3,9 +3,11 @@ from pydantic import BaseModel
 
 
 class BaseObject(BaseModel):
-    author_id: int
-    performer_id: int
+    author: str
+    performer: str
     status: str
+    bot_tg_enabled: bool = None
+    closed: bool = None
     term_in_fact: datetime.datetime
     term_to_plan: datetime.datetime
 

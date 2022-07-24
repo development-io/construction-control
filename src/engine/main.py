@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from db.base import database
-from endpoints import parser_yaw, task_manager, filters
+from endpoints import parser_yaw, task_manager, filters, bot_tg_notification
 import uvicorn
 
 app = FastAPI(
@@ -16,10 +16,9 @@ app = FastAPI(
 )
 
 app.include_router(parser_yaw.router, prefix="/api/pogoda", tags=["Погода"])
-app.include_router(task_manager.router, prefix="/api/task/create", tags=["Менеджер тасков"])
-# app.include_router(task_manager.router, prefix="/api/task/update", tags=["Менеджер тасков"])
+app.include_router(task_manager.router, prefix="/api/task/list", tags=["Менеджер тасков"])
 app.include_router(filters.router, prefix="/api/filters", tags=["Фильтрация"])
-# app.include_router(tg_notification.router, prefix="/api/tg/notification", tags=["Нотификация в телеграм бот"])
+# app.include_router(bot_tg_notification.router, prefix="/api/tg/notification", tags=["Нотификация в телеграм бот"])
 
 @app.on_event("startup")
 async def startup():

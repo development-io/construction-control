@@ -17,5 +17,7 @@ async def get_weather():
     url_pogoda = 'https://yandex.ru/pogoda/35?page=main&day=&ta_features=favorites%3Bsgn&turboapp=1'
 
     response = requests.get(url_api, headers=headers)
+    city = "Краснодар +27"
+    description = "Вероятность осадков: 6%, Влажность: 52%, Ветер: 2 м/с"
 
-    return {"result": [{"Краснодар": "+26"}]}
+    return {"result": [{ 'city': city, 'details_info': description}]}
